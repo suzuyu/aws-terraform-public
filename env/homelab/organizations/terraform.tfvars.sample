@@ -1,0 +1,10 @@
+# organizagion
+ou1_name            = "homelab"                       # ou1 名称
+ou1_1_name          = "infra"                         # infra ou名
+ou1_1_account_name  = "infra"                         # infra アカウント名
+ou1_1_account_email = "xxxxxxx+awsinfra@gmail.com"    # infra 向けメールアドレス (設定後にAWSアカウント払い出しメールが出る)
+ou1_2_name          = "service"                       # service ou名
+ou1_2_account_name  = "service1"                      # service アカウント名
+ou1_2_account_email = "xxxxxxx+awsservice1@gmail.com" # service1 向けメールアドレス (設定後にAWSアカウント払い出しメールが出る)
+# scp
+restrict_regions = ["ap-northeast-1", "ap-northeast-3", ] # リージョン制限
