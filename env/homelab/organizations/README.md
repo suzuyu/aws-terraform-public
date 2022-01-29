@@ -116,6 +116,7 @@ terraform apply
 |  sid  | 内容  |  default  |
 | ---- | ---- | ---- |
 | RegionRestriction | 設定以外のリージョンを拒否 | ["ap-northeast-1", "ap-northeast-3", ] |
+| SourceIpRestriction | 設定以外の送信元IPを拒否 | - |
 
 ### RegionRestriction
 
@@ -145,3 +146,18 @@ terraform apply
 ![AWS_RegionRestriction_S3_DENY_1.png](images/AWS_RegionRestriction_S3_DENY_1.png)
 
 ![AWS_RegionRestriction_S3_DENY_2.png](images/AWS_RegionRestriction_S3_DENY_2.png)
+
+### SourceIpRestriction
+
+アクセス元 IP により制限する
+
+#### S3 反映表示例
+
+許可したアクセス元 IP からだと通常通り見える
+
+![AWS_SourceIpRestriction_S3_ALLOW.png](images/AWS_SourceIpRestriction_S3_ALLOW.png)
+
+許可していないアクセス元 IP からだとエラーで見れない
+
+![AWS_SourceIpRestriction_S3_DENY.png](images/AWS_SourceIpRestriction_S3_DENY.png)
+

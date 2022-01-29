@@ -16,3 +16,5 @@ variable "restrict_regions" {
   type    = list(string)
   default = ["ap-northeast-1", "ap-northeast-3", ]
 }
+
+variable "restrict_source_ips" {}
