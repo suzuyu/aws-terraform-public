@@ -240,8 +240,9 @@ iPhone などに`Google Authenticator`をインストールした後に、`Show 
 ## その他
 
 ### コスト
-https://docs.aws.amazon.com/ja_jp/organizations/latest/userguide/orgs_introduction.html#pricing
+https://aws.amazon.com/jp/single-sign-on/faqs/
 
 ```
-AWS Organizations は、追加料金なしで提供されます。
+AWS SSO にかかるコストはどれくらいですか?
+AWS SSO に追加料金は必要ありません。
 ```

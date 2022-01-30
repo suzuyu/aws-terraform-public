@@ -161,3 +161,11 @@ terraform apply
 
 ![AWS_SourceIpRestriction_S3_DENY.png](images/AWS_SourceIpRestriction_S3_DENY.png)
 
+## その他
+
+### コスト
+https://docs.aws.amazon.com/ja_jp/organizations/latest/userguide/orgs_introduction.html#pricing
+
+```
+AWS Organizations は、追加料金なしで提供されます。
+```
