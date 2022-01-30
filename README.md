@@ -132,3 +132,11 @@ aws s3api put-public-access-block \
 ```sh
 ~/aws-terraform/env/homelab/organizations/README.md
 ```
+
+## AWS SSO 設定
+
+下記、`README.md` の設定
+
+```sh
+~/aws-terraform/env/homelab/sso/README.md
+```
