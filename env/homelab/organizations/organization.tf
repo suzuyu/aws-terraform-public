@@ -4,6 +4,7 @@ resource "aws_organizations_organization" "org" {
   aws_service_access_principals = [
     "cloudtrail.amazonaws.com",
     "config.amazonaws.com",
+    "sso.amazonaws.com", # sso 利用時
   ]
 
   feature_set = "ALL"
@@ -44,6 +45,10 @@ resource "aws_organizations_account" "ou1-1-account1" {
   # iam_user_access_to_billing = "ALLOW"
 }
 
+output "ou1-1-account1_id" {
+  value = aws_organizations_account.ou1-1-account1.id
+}
+
 ## create ou1-2 account
 resource "aws_organizations_account" "ou1-2-account1" {
   name      = var.ou1_2_account_name
@@ -51,4 +56,8 @@ resource "aws_organizations_account" "ou1-2-account1" {
   parent_id = aws_organizations_organizational_unit.ou1-2.id
   # role_name                  = "OrganizationAccountAccessRole"
   # iam_user_access_to_billing = "ALLOW"
+}
+
+output "ou1-2-account1_id" {
+  value = aws_organizations_account.ou1-2-account1.id
 }

@@ -18,3 +18,9 @@ variable "restrict_regions" {
 }
 
 variable "restrict_source_ips" {}
+
+# https://docs.aws.amazon.com/service-authorization/latest/reference/reference_policies_actions-resources-contextkeys.html
+variable "allow_service_prefix_list" {
+  type    = list(string)
+  default = ["*"] # All Allow
+}

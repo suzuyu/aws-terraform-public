@@ -147,3 +147,11 @@ restrict_source_ips = [
   "126.35.128.0/18",
   "126.35.192.0/18",
 ]
+
+# https://docs.aws.amazon.com/service-authorization/latest/reference/reference_policies_actions-resources-contextkeys.html
+allow_service_prefix_list = [
+  # "iam:*", # Default Allow
+  # "support:*", # Default Allow
+  "ec2:*",
+  "s3:*",
+]

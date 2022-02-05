@@ -27,13 +27,15 @@ AWS Organization 有効化済み (`../organizaions/` を実施済み)
 ### 設定区分
 
 - 手動設定が必要
-  - [AWS SSO 有効化](#AWS-SSO-の有効化)
+  - [AWS SSO 有効化](#AWS-SSO-の有効化) ※
   - [AWS SSO ID ソース設定](#AWS-SSO-ID-ソース-設定)
   - [AWS SSO ID ユーザー, グループ作成](#aws-sso-id-ユーザー-グループ作成)
   - [MFA 設定](#MFA-認証)
 - [Terraform](#グループへの権限設定とアカウントへの紐付け-terraform)
   - 権限設定
   - アカウントへの設定
+
+※ `../organizations/organization.tf` の `aws_service_access_principals` で `sso.amazonaws.com` を有効化している場合は不要
 
 
 ### AWS SSO の有効化

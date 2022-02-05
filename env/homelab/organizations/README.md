@@ -108,15 +108,30 @@ terraform apply
 
 以上で、パスワード設定が完了して、払い出しアカウントへログインが可能になる
 
+
+#### 既存のアカウントを Organization Account に招待する
+
+`AWS Organizations > AWS アカウント > AWS アカウントを追加` で、 `既存の AWS アカウントを招待` を選択して、AWS アカウントの情報を入れて招待する
+
+![AWS_ORGANIZATIONS_ACCOUNT_INVITE_1.png](images/AWS_ORGANIZATIONS_ACCOUNT_INVITE_1.png)
+
+招待後に、Terraform へ import する例は下記のように AWS Account ID を対象のリソースへ import する
+
+```sh
+terraform import aws_organizations_account.ou1-1-account1 XXXXXXXXXXXX
+```
+
+
 ## SCP (Service Control Policies)
 組織のアクセス許可設定を一元的にポリシー管理ができる SCP を設定する ([ドキュメント](https://docs.aws.amazon.com/ja_jp/organizations/latest/userguide/orgs_manage_policies_scps.html))
 
 下記を設定
 
-|  sid  | 内容  |  default  |
-| ---- | ---- | ---- |
-| RegionRestriction | 設定以外のリージョンを拒否 | ["ap-northeast-1", "ap-northeast-3", ] |
-| SourceIpRestriction | 設定以外の送信元IPを拒否 | - |
+|  sid  | 内容  |  default  |  設定変数  |
+| ---- | ---- | ---- | ---- |
+| RegionRestriction | 設定以外のリージョンを拒否 (Global サービス以外) |["ap-northeast-1", "ap-northeast-3", ] | restrict_regions | 
+| SourceIpRestriction | 設定以外の送信元IPを拒否 | - | restrict_source_ips |
+| AwsServiceRestriction | 設定以外の AWS Service の利用を拒否 | [`*`] (全て許可.制限時も`iam:*`,`support:*`は許可) | allow_service_prefix_list |
 
 ### RegionRestriction
 
@@ -160,6 +175,10 @@ terraform apply
 許可していないアクセス元 IP からだとエラーで見れない
 
 ![AWS_SourceIpRestriction_S3_DENY.png](images/AWS_SourceIpRestriction_S3_DENY.png)
+
+### AwsServiceRestriction
+AWS Service (ES2, S3, etc.) を組織的に利用できるサービスを制限する<br>
+組織的にセキュリティチェックをしたサービスのみ利用可能にしたい場合などに、ホワイトリスト形式( 例：[`ec2:*`,`s3:*`,])で制御する (デフォルトは全て許可[`*`])
 
 ## その他
 
