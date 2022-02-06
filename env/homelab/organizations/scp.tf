@@ -11,6 +11,7 @@ data "aws_iam_policy_document" "restrict_regions" {
       "iam:*",
       "route53:*",
       "support:*",
+      "directconnect:*",
     ]
 
     # https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/reference_policies_elements_condition.html
