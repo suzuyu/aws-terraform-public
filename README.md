@@ -148,3 +148,78 @@ aws s3api put-public-access-block \
 ```sh
 ~/aws-terraform/env/homelab/cost-alert/README.md
 ```
+
+## 複数 AWS Account でのクレデンシャル管理
+
+Terraform での[クレデンシャル管理](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)は複数あるが、
+ここでは [Shared credentials files](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-where) を使用する
+
+下記のようにクレデンシャルファイルを作成し、AWS アカウントごとに名前をつけて、
+Terraform アカウントを作成 (やり方は各アカウント内で[AWS Terraform IAM ユーザの作成]と同じ) して、`aws_access_key_id` と `aws_secret_access_key` を記載する
+
+
+```~/.aws/credentials
+[organization]
+aws_access_key_id=1111111111XXXXXXXXXX
+aws_secret_access_key=11111111111111111111111111111111111/AAAA
+
+[infra]
+aws_access_key_id=1111111111YYYYYYYYYY
+aws_secret_access_key=11111111111111111111111111111111111/BBBB
+
+[service]
+aws_access_key_id=1111111111ZZZZZZZZZZ
+aws_secret_access_key=11111111111111111111111111111111111/CCCC
+```
+
+aws cli で指定する場合は`--profile [NAME]`で指定する
+
+```sh
+aws configure list --profile infra
+```
+
+terraform では `provider` と `backend` で `profile` で指定する (下記例)
+
+```tf
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "=4.30.0"
+    }
+  }
+  # https://www.terraform.io/language/settings/backends/s3
+  backend "s3" {
+    bucket                  = "tfstate-bucketXXXXX"
+    key                     = "infra-infra1-vpc"
+    region                  = "ap-northeast-1"
+    shared_credentials_file = "~/.aws/credentials"
+    profile                 = "infra"
+  }
+}
+
+# Configure the AWS Provider
+provider "aws" {
+  region                  = "ap-northeast-1"
+  shared_credentials_file = "~/.aws/credentials"
+  profile                 = "infra"
+}
+```
+
+terraform 実行前に環境変数があると profile より優先されてしまうので、環境変数を消しておく
+
+```sh
+unset AWS_ACCESS_KEY_ID
+unset AWS_SECRET_ACCESS_KEY
+```
+
+上記をやらないと `terraform init` 実施時にエラーが出る (TF_LOG=DEBUGでデバッグすると環境変数側が優先されていることが見える)
+
+```txt:エラーログ
+Initializing the backend...
+
+Successfully configured the backend "s3"! Terraform will automatically
+use this backend unless the backend configuration changes.
+Error refreshing state: AccessDenied: Access Denied
+        status code: 403, request id: xxxxxxxxxxx, host id: xxxxxxxxxxxxxxxxxxx...
+```
