@@ -1,0 +1,2 @@
+total_cost_usd                          = "20"                    # USD
+total_cost_alert_destination_email_list = ["xxxxxxx@gmail.com", ] # email
