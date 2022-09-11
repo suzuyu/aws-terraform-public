@@ -140,3 +140,11 @@ aws s3api put-public-access-block \
 ```sh
 ~/aws-terraform/env/homelab/sso/README.md
 ```
+
+## 予算アラート設定
+
+下記、`README.md` の設定
+
+```sh
+~/aws-terraform/env/homelab/cost-alert/README.md
+```
